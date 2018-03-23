@@ -19,7 +19,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/File/ClassFileLocator.php';
 
 /**
  * Test class for Zend_File_ClassFileLocator
