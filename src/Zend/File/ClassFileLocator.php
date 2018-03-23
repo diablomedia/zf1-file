@@ -146,8 +146,8 @@ class Zend_File_ClassFileLocator extends FilterIterator
                         }
                         list($type, $content, $line) = $token;
                         if (T_STRING == $type) {
-                    // If a classname was found, set it in the object, and
-                    // return boolean true (found)
+                            // If a classname was found, set it in the object, and
+                            // return boolean true (found)
                             if (!isset($namespace) || null === $namespace) {
                                 if (isset($saveNamespace) && $saveNamespace) {
                                     $namespace = $savedNamespace;
