@@ -15,8 +15,8 @@
         "diablomedia/zendframework1-exception": "^1.0.0",
         "diablomedia/zendframework1-loader": "^1.0.0",
         "diablomedia/zendframework1-filter": "*",
-        "diablomedia/zendframework1-progressbar": "*",
-        "diablomedia/zendframework1-translate": "*",
+        "diablomedia/zendframework1-progressbar": "^1.0.0",
+        "diablomedia/zendframework1-translate": "^1.0.0",
         "diablomedia/zendframework1-validate": "*"
     },
     "autoload": {
