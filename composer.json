@@ -14,10 +14,11 @@
         "php": ">=7.0.0",
         "diablomedia/zendframework1-exception": "^1.0.0",
         "diablomedia/zendframework1-loader": "^1.0.0",
-        "diablomedia/zendframework1-filter": "*",
+        "diablomedia/zendframework1-filter": "^1.0.0",
         "diablomedia/zendframework1-progressbar": "^1.0.0",
         "diablomedia/zendframework1-translate": "^1.0.0",
-        "diablomedia/zendframework1-validate": "*"
+        "diablomedia/zendframework1-validate": "^1.0.0",
+        "diablomedia/zendframework1-validate-file": "^1.0.0"
     },
     "autoload": {
         "psr-0": {
