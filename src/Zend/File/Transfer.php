@@ -59,7 +59,7 @@ class Zend_File_Transfer
      */
     public function setAdapter($adapter, $direction = false, $options = array())
     {
-        if (Zend_Loader::isReadable('Zend/File/Transfer/Adapter/' . ucfirst($adapter). '.php')) {
+        if (Zend_Loader::isReadable('Zend/File/Transfer/Adapter/' . ucfirst($adapter) . '.php')) {
             $adapter = 'Zend_File_Transfer_Adapter_' . ucfirst($adapter);
         }
 
@@ -67,10 +67,10 @@ class Zend_File_Transfer
             Zend_Loader::loadClass($adapter);
         }
 
-        $direction = (integer) $direction;
+        $direction                  = (integer) $direction;
         $this->_adapter[$direction] = new $adapter($options);
         if (!$this->_adapter[$direction] instanceof Zend_File_Transfer_Adapter_Abstract) {
-            throw new Zend_File_Transfer_Exception("Adapter " . $adapter . " does not extend Zend_File_Transfer_Adapter_Abstract");
+            throw new Zend_File_Transfer_Exception('Adapter ' . $adapter . ' does not extend Zend_File_Transfer_Adapter_Abstract');
         }
 
         return $this;

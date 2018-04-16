@@ -32,8 +32,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**@+
      * Plugin loader Constants
      */
-    const FILTER    = 'FILTER';
-    const VALIDATE  = 'VALIDATE';
+    const FILTER   = 'FILTER';
+    const VALIDATE = 'VALIDATE';
     /**@-*/
 
     /**
@@ -214,7 +214,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 $prefixSegment = ucfirst(strtolower($type));
                 $pathSegment   = $prefixSegment;
                 if (!isset($this->_loaders[$type])) {
-                    $paths         = array(
+                    $paths = array(
                         'Zend_' . $prefixSegment . '_'     => 'Zend/' . $pathSegment . '/',
                         'Zend_' . $prefixSegment . '_File' => 'Zend/' . $pathSegment . '/File',
                     );
@@ -350,14 +350,14 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $files                    = $this->_getFiles($files, true, true);
         foreach ($files as $file) {
             if ($name == 'NotEmpty') {
-                $temp = $this->_files[$file]['validators'];
-                $this->_files[$file]['validators']  = array($name);
+                $temp                              = $this->_files[$file]['validators'];
+                $this->_files[$file]['validators'] = array($name);
                 $this->_files[$file]['validators'] += $temp;
             } else {
                 $this->_files[$file]['validators'][] = $name;
             }
 
-            $this->_files[$file]['validated']    = false;
+            $this->_files[$file]['validated'] = false;
         }
 
         return $this;
@@ -375,13 +375,13 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         foreach ($validators as $name => $validatorInfo) {
             if ($validatorInfo instanceof Zend_Validate_Interface) {
                 $this->addValidator($validatorInfo, null, null, $files);
-            } else if (is_string($validatorInfo)) {
+            } elseif (is_string($validatorInfo)) {
                 if (!is_int($name)) {
                     $this->addValidator($name, null, $validatorInfo, $files);
                 } else {
                     $this->addValidator($validatorInfo, null, null, $files);
                 }
-            } else if (is_array($validatorInfo)) {
+            } elseif (is_array($validatorInfo)) {
                 $argc                = count($validatorInfo);
                 $breakChainOnFailure = false;
                 $options             = array();
@@ -407,15 +407,19 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                             case (0 == $argc):
                                 break;
                             case (1 <= $argc):
-                                $validator  = array_shift($validatorInfo);
+                                $validator = array_shift($validatorInfo);
+                                // no break
                             case (2 <= $argc):
                                 $breakChainOnFailure = array_shift($validatorInfo);
+                                // no break
                             case (3 <= $argc):
                                 $options = array_shift($validatorInfo);
+                                // no break
                             case (4 <= $argc):
                                 if (!empty($validatorInfo)) {
                                     $file = array_shift($validatorInfo);
                                 }
+                                // no break
                             default:
                                 $this->addValidator($validator, $breakChainOnFailure, $options, $file);
                                 break;
@@ -550,7 +554,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * @param array $files   (Optional) Files to set the options for
      * @return $this
      */
-    public function setOptions($options = array(), $files = null) {
+    public function setOptions($options = array(), $files = null)
+    {
         $file = $this->_getFiles($files, false, true);
 
         if (is_array($options)) {
@@ -561,13 +566,13 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             foreach ($options as $name => $value) {
                 foreach ($file as $key => $content) {
                     switch ($name) {
-                        case 'magicFile' :
+                        case 'magicFile':
                             $this->_files[$key]['options'][$name] = (string) $value;
                             break;
 
-                        case 'ignoreNoFile' :
-                        case 'useByteString' :
-                        case 'detectInfos' :
+                        case 'ignoreNoFile':
+                        case 'useByteString':
+                        case 'detectInfos':
                             $this->_files[$key]['options'][$name] = (boolean) $value;
                             break;
 
@@ -587,7 +592,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * @param  array $files (Optional) Files to return the options for
      * @return array Options for given files
      */
-    public function getOptions($files = null) {
+    public function getOptions($files = null)
+    {
         $file = $this->_getFiles($files, false, true);
 
         foreach ($file as $key => $content) {
@@ -617,7 +623,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $translator      = $this->getTranslator();
         $this->_messages = array();
         $break           = false;
-        foreach($check as $key => $content) {
+        foreach ($check as $key => $content) {
             if (array_key_exists('validators', $content) &&
                 in_array('Zend_Validate_File_Count', $content['validators'])) {
                 $validator = $this->_validators['Zend_Validate_File_Count'];
@@ -633,7 +639,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 }
 
                 $checkit .= DIRECTORY_SEPARATOR . $content['name'];
-                    $validator->addFile($checkit);
+                $validator->addFile($checkit);
             }
         }
 
@@ -644,7 +650,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         }
 
         foreach ($check as $key => $content) {
-            $fileerrors  = array();
+            $fileerrors = array();
             if (array_key_exists('validators', $content) && $content['validated']) {
                 continue;
             }
@@ -935,8 +941,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         $files     = $this->_getFiles($file, true, true);
         $result    = array();
-        $directory = "";
-        foreach($files as $file) {
+        $directory = '';
+        foreach ($files as $file) {
             if (empty($this->_files[$file]['name'])) {
                 continue;
             }
@@ -1016,8 +1022,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function setDestination($destination, $files = null)
     {
-        $orig = $files;
-        $destination = rtrim($destination, "/\\");
+        $orig        = $files;
+        $destination = rtrim($destination, '/\\');
         if (!is_dir($destination)) {
             throw new Zend_File_Transfer_Exception(
                 'The given destination is not a directory or does not exist'
@@ -1057,8 +1063,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function getDestination($files = null)
     {
-        $orig  = $files;
-        $files = $this->_getFiles($files, false, true);
+        $orig         = $files;
+        $files        = $this->_getFiles($files, false, true);
         $destinations = array();
         if (empty($files) and is_string($orig)) {
             if (isset($this->_files[$orig]['destination'])) {
@@ -1080,7 +1086,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         if (empty($destinations)) {
             $destinations = $this->_getTmpDir();
-        } else if (count($destinations) == 1) {
+        } elseif (count($destinations) == 1) {
             $destinations = current($destinations);
         }
 
@@ -1161,12 +1167,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         $files  = $this->_getFiles($files);
         $result = array();
-        foreach($files as $key => $value) {
+        foreach ($files as $key => $value) {
             if (file_exists($value['name'])) {
                 $result[$key] = hash_file($hash, $value['name']);
-            } else if (file_exists($value['tmp_name'])) {
+            } elseif (file_exists($value['tmp_name'])) {
                 $result[$key] = hash_file($hash, $value['tmp_name']);
-            } else if (empty($value['options']['ignoreNoFile'])) {
+            } elseif (empty($value['options']['ignoreNoFile'])) {
                 throw new Zend_File_Transfer_Exception("The file '{$value['name']}' does not exist");
             }
         }
@@ -1189,14 +1195,14 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         $files  = $this->_getFiles($files);
         $result = array();
-        foreach($files as $key => $value) {
+        foreach ($files as $key => $value) {
             if (file_exists($value['name']) || file_exists($value['tmp_name'])) {
                 if ($value['options']['useByteString']) {
                     $result[$key] = self::_toByteString($value['size']);
                 } else {
                     $result[$key] = $value['size'];
                 }
-            } else if (empty($value['options']['ignoreNoFile'])) {
+            } elseif (empty($value['options']['ignoreNoFile'])) {
                 throw new Zend_File_Transfer_Exception("The file '{$value['name']}' does not exist");
             } else {
                 continue;
@@ -1219,9 +1225,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     protected function _detectFileSize($value)
     {
         if (file_exists($value['name'])) {
-            $result = sprintf("%u", @filesize($value['name']));
-        } else if (file_exists($value['tmp_name'])) {
-            $result = sprintf("%u", @filesize($value['tmp_name']));
+            $result = sprintf('%u', @filesize($value['name']));
+        } elseif (file_exists($value['tmp_name'])) {
+            $result = sprintf('%u', @filesize($value['tmp_name']));
         } else {
             return null;
         }
@@ -1241,10 +1247,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         $files  = $this->_getFiles($files);
         $result = array();
-        foreach($files as $key => $value) {
+        foreach ($files as $key => $value) {
             if (file_exists($value['name']) || file_exists($value['tmp_name'])) {
                 $result[$key] = $value['type'];
-            } else if (empty($value['options']['ignoreNoFile'])) {
+            } elseif (empty($value['options']['ignoreNoFile'])) {
                 throw new Zend_File_Transfer_Exception("The file '{$value['name']}' does not exist");
             } else {
                 continue;
@@ -1268,7 +1274,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         if (file_exists($value['name'])) {
             $file = $value['name'];
-        } else if (file_exists($value['tmp_name'])) {
+        } elseif (file_exists($value['tmp_name'])) {
             $file = $value['tmp_name'];
         } else {
             return null;
@@ -1312,7 +1318,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     protected static function _toByteString($size)
     {
         $sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-        for ($i=0; $size >= 1024 && $i < 9; $i++) {
+        for ($i = 0; $size >= 1024 && $i < 9; $i++) {
             $size /= 1024;
         }
 
@@ -1327,7 +1333,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     protected function _filter($files = null)
     {
-        $check           = $this->_getFiles($files);
+        $check = $this->_getFiles($files);
         foreach ($check as $name => $content) {
             if (array_key_exists('filters', $content)) {
                 foreach ($content['filters'] as $class) {
@@ -1382,7 +1388,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 $tmpdir[] = realpath($upload);
             }
 
-            foreach($tmpdir as $directory) {
+            foreach ($tmpdir as $directory) {
                 if ($this->_isPathWriteable($directory)) {
                     $this->_tmpDir = $directory;
                 }
@@ -1390,7 +1396,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
             if (empty($this->_tmpDir)) {
                 // Attemp to detect by creating a temporary file
-                $tempFile = tempnam(md5(uniqid(rand(), TRUE)), '');
+                $tempFile = tempnam(md5(uniqid(rand(), true)), '');
                 if ($tempFile) {
                     $this->_tmpDir = realpath(dirname($tempFile));
                     unlink($tempFile);
@@ -1399,7 +1405,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 }
             }
 
-            $this->_tmpDir = rtrim($this->_tmpDir, "/\\");
+            $this->_tmpDir = rtrim($this->_tmpDir, '/\\');
         }
         return $this->_tmpDir;
     }
@@ -1412,7 +1418,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     protected function _isPathWriteable($path)
     {
-        $tempFile = rtrim($path, "/\\");
+        $tempFile = rtrim($path, '/\\');
         $tempFile .= '/' . 'test.1';
 
         $result = @file_put_contents($tempFile, 'TEST');

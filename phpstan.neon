@@ -1,3 +1,6 @@
 parameters:
+    excludes_analyse:
+        - %rootDir%/../../../tests/*
+        - %rootDir%/../../../vendor/*
     ignoreErrors:
         - '#Call to an undefined method Zend_File_ClassFileLocator::setInfoClass\(\)\.#'

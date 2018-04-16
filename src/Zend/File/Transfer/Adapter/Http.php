@@ -113,7 +113,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
         $content = 0;
         if (isset($_SERVER['CONTENT_LENGTH'])) {
             $content = $_SERVER['CONTENT_LENGTH'];
-        } else if (!empty($_POST)) {
+        } elseif (!empty($_POST)) {
             $content = serialize($_POST);
         }
 
@@ -303,11 +303,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
         $session = 'Zend_File_Transfer_Adapter_Http_ProgressBar';
         $status  = array(
-            'total'    => 0,
-            'current'  => 0,
-            'rate'     => 0,
-            'message'  => '',
-            'done'     => false
+            'total'   => 0,
+            'current' => 0,
+            'rate'    => 0,
+            'message' => '',
+            'done'    => false
         );
 
         if (is_array($id)) {
@@ -342,15 +342,14 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
         if (!empty($id)) {
             if (self::isApcAvailable()) {
-
                 $call = call_user_func(self::$_callbackApc, ini_get('apc.rfc1867_prefix') . $id);
                 if (is_array($call)) {
                     $status = $call + $status;
                 }
-            } else if (self::isUploadProgressAvailable()) {
+            } elseif (self::isUploadProgressAvailable()) {
                 $call = call_user_func(self::$_callbackUploadProgress, $id);
                 if (is_array($call)) {
-                    $status = $call + $status;
+                    $status            = $call + $status;
                     $status['total']   = $status['bytes_total'];
                     $status['current'] = $status['bytes_uploaded'];
                     $status['rate']    = $status['speed_average'];
@@ -363,11 +362,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             if (!is_array($call)) {
                 $status['done']    = true;
                 $status['message'] = 'Failure while retrieving the upload progress';
-            } else if (!empty($status['cancel_upload'])) {
+            } elseif (!empty($status['cancel_upload'])) {
                 $status['done']    = true;
                 $status['message'] = 'The upload has been canceled';
             } else {
-                $status['message'] = self::_toByteString($status['current']) . " - " . self::_toByteString($status['total']);
+                $status['message'] = self::_toByteString($status['current']) . ' - ' . self::_toByteString($status['total']);
             }
 
             $status['id'] = $id;
@@ -426,22 +425,22 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             if (is_array($content['name'])) {
                 foreach ($content as $param => $file) {
                     foreach ($file as $number => $target) {
-                        $this->_files[$form . '_' . $number . '_'][$param]      = $target;
-                        $this->_files[$form]['multifiles'][$number] = $form . '_' . $number . '_';
+                        $this->_files[$form . '_' . $number . '_'][$param] = $target;
+                        $this->_files[$form]['multifiles'][$number]        = $form . '_' . $number . '_';
                     }
                 }
 
                 $this->_files[$form]['name'] = $form;
-                foreach($this->_files[$form]['multifiles'] as $key => $value) {
+                foreach ($this->_files[$form]['multifiles'] as $key => $value) {
                     $this->_files[$value]['options']   = $this->_options;
                     $this->_files[$value]['validated'] = false;
                     $this->_files[$value]['received']  = false;
                     $this->_files[$value]['filtered']  = false;
 
-                    $mimetype = $this->_detectMimeType($this->_files[$value]);
+                    $mimetype                     = $this->_detectMimeType($this->_files[$value]);
                     $this->_files[$value]['type'] = $mimetype;
 
-                    $filesize = $this->_detectFileSize($this->_files[$value]);
+                    $filesize                     = $this->_detectFileSize($this->_files[$value]);
                     $this->_files[$value]['size'] = $filesize;
 
                     if ($this->_options['detectInfos']) {
@@ -456,10 +455,10 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 $this->_files[$form]['received']  = false;
                 $this->_files[$form]['filtered']  = false;
 
-                $mimetype = $this->_detectMimeType($this->_files[$form]);
+                $mimetype                    = $this->_detectMimeType($this->_files[$form]);
                 $this->_files[$form]['type'] = $mimetype;
 
-                $filesize = $this->_detectFileSize($this->_files[$form]);
+                $filesize                    = $this->_detectFileSize($this->_files[$form]);
                 $this->_files[$form]['size'] = $filesize;
 
                 if ($this->_options['detectInfos']) {

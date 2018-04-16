@@ -32,7 +32,6 @@
  */
 class Zend_File_ClassFileLocatorTest extends PHPUnit\Framework\TestCase
 {
-
     public function testConstructorThrowsInvalidArgumentExceptionForInvalidStringDirectory()
     {
         $this->expectException('InvalidArgumentException');
@@ -65,13 +64,13 @@ class Zend_File_ClassFileLocatorTest extends PHPUnit\Framework\TestCase
         }
 
         $locator = new Zend_File_ClassFileLocator(dirname(__FILE__));
-        $found = false;
+        $found   = false;
         foreach ($locator as $file) {
             if (preg_match('/locator-should-skip-this\.php$/', $file->getFilename())) {
                 $found = true;
             }
         }
-        $this->assertFalse($found, "Found PHP file not containing a class?");
+        $this->assertFalse($found, 'Found PHP file not containing a class?');
     }
 
     public function testIterationShouldReturnInterfaces()
@@ -81,13 +80,13 @@ class Zend_File_ClassFileLocatorTest extends PHPUnit\Framework\TestCase
         }
 
         $locator = new Zend_File_ClassFileLocator(dirname(__FILE__));
-        $found = false;
+        $found   = false;
         foreach ($locator as $file) {
             if (preg_match('/LocatorShouldFindThis\.php$/', $file->getFilename())) {
                 $found = true;
             }
         }
-        $this->assertTrue($found, "Locator skipped an interface?");
+        $this->assertTrue($found, 'Locator skipped an interface?');
     }
 
     public function testIterationShouldInjectNamespaceInFoundItems()
@@ -97,7 +96,7 @@ class Zend_File_ClassFileLocatorTest extends PHPUnit\Framework\TestCase
         }
 
         $locator = new Zend_File_ClassFileLocator(dirname(__FILE__));
-        $found = false;
+        $found   = false;
         foreach ($locator as $file) {
             $classes = $file->getClasses();
             foreach ($classes as $class) {
@@ -116,7 +115,7 @@ class Zend_File_ClassFileLocatorTest extends PHPUnit\Framework\TestCase
         }
 
         $locator = new Zend_File_ClassFileLocator(dirname(__FILE__));
-        $found = false;
+        $found   = false;
         foreach ($locator as $file) {
             $classes = $file->getClasses();
             foreach ($classes as $class) {
@@ -133,10 +132,10 @@ class Zend_File_ClassFileLocatorTest extends PHPUnit\Framework\TestCase
             $this->markTestSkipped('Test can only be run under 5.3 or later');
         }
 
-        $locator = new Zend_File_ClassFileLocator(dirname(__FILE__));
-        $foundFirst = false;
+        $locator     = new Zend_File_ClassFileLocator(dirname(__FILE__));
+        $foundFirst  = false;
         $foundSecond = false;
-        $foundThird = false;
+        $foundThird  = false;
         $foundFourth = false;
         foreach ($locator as $file) {
             if (preg_match('/MultipleClassesInMultipleNamespaces\.php$/', $file->getFilename())) {

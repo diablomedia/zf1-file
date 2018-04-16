@@ -43,11 +43,11 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
     {
         $_FILES = array(
             'txt' => array(
-                'name' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
-                'type' => 'plain/text',
-                'size' => 8,
+                'name'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
+                'type'     => 'plain/text',
+                'size'     => 8,
                 'tmp_name' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
-                'error' => 0));
+                'error'    => 0));
         $this->adapter = new Zend_File_Transfer_Adapter_HttpTest_MockAdapter();
     }
 
@@ -133,7 +133,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
     public function testReceiveEmptyArray()
     {
         $_SERVER['CONTENT_LENGTH'] = 10;
-        $_FILES = array();
+        $_FILES                    = array();
 
         $adapter = new Zend_File_Transfer_Adapter_Http();
         $this->assertFalse($adapter->receive(array()));
@@ -143,11 +143,11 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
     {
         $_FILES = array(
             'txt' => array(
-                'name' => 'unknown.txt',
-                'type' => 'plain/text',
-                'size' => 8,
+                'name'     => 'unknown.txt',
+                'type'     => 'plain/text',
+                'size'     => 8,
                 'tmp_name' => 'unknown.txt',
-                'error' => 0));
+                'error'    => 0));
         $adapter = new Zend_File_Transfer_Adapter_HttpTest_MockAdapter();
         $this->assertFalse($adapter->receive());
     }
@@ -177,11 +177,11 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
     {
         $_FILES = array(
             'txt' => array(
-                'name' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
-                'type' => 'plain/text',
-                'size' => 8,
+                'name'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
+                'type'     => 'plain/text',
+                'size'     => 8,
                 'tmp_name' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
-                'error' => 0),
+                'error'    => 0),
             'exe' => array(
                 'name' => array(
                     0 => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file1.txt',
@@ -204,7 +204,8 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(
             array('exe_0_' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file1.txt',
                   'exe_1_' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file2.txt'),
-            $adapter->getFileName('exe', false));
+            $adapter->getFileName('exe', false)
+        );
     }
 
     public function testNoUploadInProgress()
@@ -228,7 +229,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
         }
 
         $_GET['progress_key'] = 'mykey';
-        $status = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress();
+        $status               = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress();
         $this->assertEquals(array(
             'total'   => 100,
             'current' => 100,
@@ -249,8 +250,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
             'cancel_upload'  => true,
             'message'        => 'The upload has been canceled',
             'done'           => true,
-            'id'      => 'mykey'), $status);
-
+            'id'             => 'mykey'), $status);
     }
 
     public function testUploadProgressAdapter()
@@ -262,9 +262,9 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
         }
 
         $_GET['progress_key'] = 'mykey';
-        $adapter = new Zend_ProgressBar_Adapter_Console();
-        $status = array('progress' => $adapter, 'session' => 'upload');
-        $status = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress($status);
+        $adapter              = new Zend_ProgressBar_Adapter_Console();
+        $status               = array('progress' => $adapter, 'session' => 'upload');
+        $status               = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress($status);
         $this->assertArrayHasKey('total', $status);
         $this->assertArrayHasKey('current', $status);
         $this->assertArrayHasKey('rate', $status);
@@ -288,7 +288,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
     {
         $_SERVER['CONTENT_LENGTH'] = 10;
 
-        $_FILES = array();
+        $_FILES  = array();
         $adapter = new Zend_File_Transfer_Adapter_HttpTest_MockAdapter();
         $this->assertFalse($adapter->isValidParent());
         $this->assertContains('exceeds the defined ini size', current($adapter->getMessages()));
@@ -330,7 +330,7 @@ class Zend_File_Transfer_Adapter_HttpTest_MockAdapter extends Zend_File_Transfer
 
     public function switchApcToUP()
     {
-        self::$_callbackApc = null;
+        self::$_callbackApc            = null;
         self::$_callbackUploadProgress = array('Zend_File_Transfer_Adapter_HttpTest_MockAdapter', 'uPTest');
     }
 }
