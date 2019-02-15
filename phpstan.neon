@@ -1,4 +1,7 @@
 parameters:
+    level: 0
+    paths:
+        - ./
     excludes_analyse:
         - %rootDir%/../../../tests/*
         - %rootDir%/../../../vendor/*
