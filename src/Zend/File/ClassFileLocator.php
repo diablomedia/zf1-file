@@ -67,6 +67,12 @@ class Zend_File_ClassFileLocator extends FilterIterator
                 define('T_NS_SEPARATOR', '\\');
             }
         }
+        // This is so that PHP < 8 doesn't throw warnings/errors. Its value isn't static like the constants
+        // above (its value is actually an integer in PHP8, but didn't want to use that value in case in changes
+        // in future PHP versions)
+        if (!defined('T_NAME_QUALIFIED')) {
+            define('T_NAME_QUALIFIED', 'ZF_ONLY_USED_IN_PHP8_ZF');
+        }
     }
 
     /**
@@ -126,6 +132,9 @@ class Zend_File_ClassFileLocator extends FilterIterator
                             case T_STRING:
                             case T_NS_SEPARATOR:
                                 $namespace .= $content;
+                                break;
+                            case T_NAME_QUALIFIED:
+                                $namespace = $content;
                                 break;
                         }
                     }
