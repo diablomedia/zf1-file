@@ -58,15 +58,6 @@ class Zend_File_ClassFileLocator extends FilterIterator
         parent::__construct($iterator);
         $this->setInfoClass('Zend_File_PhpClassFile');
 
-        // Forward-compat with PHP 5.3
-        if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-            if (!defined('T_NAMESPACE')) {
-                define('T_NAMESPACE', 'namespace');
-            }
-            if (!defined('T_NS_SEPARATOR')) {
-                define('T_NS_SEPARATOR', '\\');
-            }
-        }
         // This is so that PHP < 8 doesn't throw warnings/errors. Its value isn't static like the constants
         // above (its value is actually an integer in PHP8, but didn't want to use that value in case in changes
         // in future PHP versions)
