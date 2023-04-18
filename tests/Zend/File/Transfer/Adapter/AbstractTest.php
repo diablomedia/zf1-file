@@ -71,7 +71,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
     public function testAdapterShouldHavePluginLoaderForValidators()
     {
         $loader = $this->adapter->getPluginLoader('validate');
-        $this->assertTrue($loader instanceof Zend_Loader_PluginLoader);
+        $this->assertInstanceOf(Zend_Loader_PluginLoader::class, $loader);
     }
 
     public function testAdapterShouldAllowAddingCustomPluginLoader()
@@ -166,7 +166,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
     {
         $this->adapter->addValidator('Count', false, array('min' => 1, 'max' => 1));
         $test = $this->adapter->getValidator('Count');
-        $this->assertTrue($test instanceof Zend_Validate_File_Count);
+        $this->assertInstanceOf(Zend_Validate_File_Count::class, $test);
     }
 
     /**
@@ -191,13 +191,13 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
         $this->assertIsArray($test);
         $this->assertCount(4, $test, var_export($test, 1));
         $count = array_shift($test);
-        $this->assertTrue($count instanceof Zend_Validate_File_Count);
+        $this->assertInstanceOf(Zend_Validate_File_Count::class, $count);
         $exists = array_shift($test);
-        $this->assertTrue($exists instanceof Zend_Validate_File_Exists);
+        $this->assertInstanceOf(Zend_Validate_File_Exists::class, $exists);
         $size = array_shift($test);
-        $this->assertTrue($size instanceof Zend_Validate_File_Upload);
+        $this->assertInstanceOf(Zend_Validate_File_Upload::class, $size);
         $ext = array_shift($test);
-        $this->assertTrue($ext instanceof Zend_Validate_File_Extension);
+        $this->assertInstanceOf(Zend_Validate_File_Extension::class, $ext);
         $orig = array_pop($validators);
         $this->assertSame($orig, $ext);
     }
@@ -213,7 +213,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
         $validators = $this->adapter->getValidators('foo');
         $this->assertCount(1, $validators);
         $validator = array_shift($validators);
-        $this->assertTrue($validator instanceof Zend_Validate_Alpha);
+        $this->assertInstanceOf(Zend_Validate_Alpha::class, $validator);
     }
 
     public function testCallingSetValidatorsOnAdapterShouldOverwriteExistingValidators()
@@ -232,14 +232,14 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
     {
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $ext = $this->adapter->getValidator('Zend_Validate_File_Extension');
-        $this->assertTrue($ext instanceof Zend_Validate_File_Extension);
+        $this->assertInstanceOf(Zend_Validate_File_Extension::class, $ext);
     }
 
     public function testAdapterShouldAllowRetrievingValidatorInstancesByPluginName()
     {
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $count = $this->adapter->getValidator('Count');
-        $this->assertTrue($count instanceof Zend_Validate_File_Count);
+        $this->assertInstanceOf(Zend_Validate_File_Count::class, $count);
     }
 
     public function testAdapterShouldAllowRetrievingAllValidatorsAtOnce()
@@ -249,7 +249,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
         $this->assertIsArray($validators);
         $this->assertCount(4, $validators);
         foreach ($validators as $validator) {
-            $this->assertTrue($validator instanceof Zend_Validate_Interface);
+            $this->assertInstanceOf(Zend_Validate_Interface::class, $validator);
         }
     }
 
@@ -344,7 +344,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
     public function testAdapterShouldHavePluginLoaderForFilters()
     {
         $loader = $this->adapter->getPluginLoader('filter');
-        $this->assertTrue($loader instanceof Zend_Loader_PluginLoader);
+        $this->assertInstanceOf(Zend_Loader_PluginLoader::class, $loader);
     }
 
     public function testFilterPluginLoaderShouldRegisterPathsForBaseAndFileFiltersByDefault()
@@ -368,7 +368,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
     {
         $this->adapter->addFilter('StringTrim');
         $test = $this->adapter->getFilter('StringTrim');
-        $this->assertTrue($test instanceof Zend_Filter_StringTrim);
+        $this->assertInstanceOf(Zend_Filter_StringTrim::class, $test);
     }
 
     /**
@@ -392,9 +392,9 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
         $this->assertIsArray($test);
         $this->assertCount(3, $test, var_export($test, 1));
         $count = array_shift($test);
-        $this->assertTrue($count instanceof Zend_Filter_Word_SeparatorToCamelCase);
+        $this->assertInstanceOf(Zend_Filter_Word_SeparatorToCamelCase::class, $count);
         $size = array_shift($test);
-        $this->assertTrue($size instanceof Zend_Filter_Alpha);
+        $this->assertInstanceOf(Zend_Filter_Alpha::class, $size);
         $ext  = array_shift($test);
         $orig = array_pop($filters);
         $this->assertSame($orig, $ext);
@@ -411,7 +411,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
         $filters = $this->adapter->getFilters('foo');
         $this->assertCount(1, $filters);
         $filter = array_shift($filters);
-        $this->assertTrue($filter instanceof Zend_Filter_Alpha);
+        $this->assertInstanceOf(Zend_Filter_Alpha::class, $filter);
     }
 
     public function testCallingSetFiltersOnAdapterShouldOverwriteExistingFilters()
@@ -430,14 +430,14 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
     {
         $this->testAdapterShouldAllowAddingMultipleFiltersAtOnceUsingBothInstancesAndPluginLoader();
         $ext = $this->adapter->getFilter('Zend_Filter_BaseName');
-        $this->assertTrue($ext instanceof Zend_Filter_BaseName);
+        $this->assertInstanceOf(Zend_Filter_BaseName::class, $ext);
     }
 
     public function testAdapterShouldAllowRetrievingFilterInstancesByPluginName()
     {
         $this->testAdapterShouldAllowAddingMultipleFiltersAtOnceUsingBothInstancesAndPluginLoader();
         $count = $this->adapter->getFilter('Alpha');
-        $this->assertTrue($count instanceof Zend_Filter_Alpha);
+        $this->assertInstanceOf(Zend_Filter_Alpha::class, $count);
     }
 
     public function testAdapterShouldAllowRetrievingAllFiltersAtOnce()
@@ -447,7 +447,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
         $this->assertIsArray($filters);
         $this->assertCount(3, $filters);
         foreach ($filters as $filter) {
-            $this->assertTrue($filter instanceof Zend_Filter_Interface);
+            $this->assertInstanceOf(Zend_Filter_Interface::class, $filter);
         }
     }
 
@@ -823,16 +823,16 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit\Framework\TestCase
         $test = $this->adapter->getValidators('foo');
         $this->assertCount(2, $test);
         $mimeType = array_shift($test);
-        $this->assertTrue($mimeType instanceof Zend_Validate_File_MimeType);
+        $this->assertInstanceOf(Zend_Validate_File_MimeType::class, $mimeType);
         $filesSize = array_shift($test);
-        $this->assertTrue($filesSize instanceof Zend_Validate_File_FilesSize);
+        $this->assertInstanceOf(Zend_Validate_File_FilesSize::class, $filesSize);
 
         $test = $this->adapter->getValidators('bar');
         $this->assertCount(2, $test);
         $filesSize = array_shift($test);
-        $this->assertTrue($filesSize instanceof Zend_Validate_File_Count);
+        $this->assertInstanceOf(Zend_Validate_File_Count::class, $filesSize);
         $mimeType = array_shift($test);
-        $this->assertTrue($mimeType instanceof Zend_Validate_File_MimeType);
+        $this->assertInstanceOf(Zend_Validate_File_MimeType::class, $mimeType);
 
         $test = $this->adapter->getValidators('baz');
         $this->assertCount(0, $test);

@@ -33,6 +33,8 @@
  */
 class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
 {
+    protected $adapter;
+
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
@@ -75,7 +77,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit\Framework\TestCase
         );
         $this->adapter->setValidators($validators);
         $test = $this->adapter->getValidator('Upload');
-        $this->assertTrue($test instanceof Zend_Validate_File_Upload);
+        $this->assertInstanceOf(Zend_Validate_File_Upload::class, $test);
     }
 
     /**
