@@ -3,7 +3,8 @@ grumphp:
     tasks:
         composer:
             strict: true
-        composer_require_checker: ~
+        composer_require_checker:
+            config_file: require-checker-config.json
         phpcsfixer2:
             allow_risky: true
             config: .php-cs-fixer.php
