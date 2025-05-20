@@ -9,6 +9,7 @@
     "homepage": "http://framework.zend.com/",
     "license": "BSD-3-Clause",
     "prefer-stable": true,
+    "minimum-stability": "dev",
     "require": {
         "ext-hash": "*",
         "ext-fileinfo": "*",
@@ -17,7 +18,7 @@
         "diablomedia/zendframework1-exception": "^1.1.1",
         "diablomedia/zendframework1-loader": "^1.0.5",
         "diablomedia/zendframework1-filter": "^1.0.6",
-        "diablomedia/zendframework1-progressbar": "^1.0.4",
+        "diablomedia/zendframework1-progressbar": "dev-php-84 as 1.0.5",
         "diablomedia/zendframework1-translate": "^1.0.5",
         "diablomedia/zendframework1-validate": "^1.0.5",
         "diablomedia/zendframework1-validate-file": "dev-php-84 as 1.0.5"
