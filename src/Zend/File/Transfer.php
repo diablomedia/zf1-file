@@ -67,7 +67,7 @@ class Zend_File_Transfer
             Zend_Loader::loadClass($adapter);
         }
 
-        $direction                  = (integer) $direction;
+        $direction                  = (int) $direction;
         $this->_adapter[$direction] = new $adapter($options);
         if (!$this->_adapter[$direction] instanceof Zend_File_Transfer_Adapter_Abstract) {
             throw new Zend_File_Transfer_Exception('Adapter ' . $adapter . ' does not extend Zend_File_Transfer_Adapter_Abstract');
@@ -90,7 +90,7 @@ class Zend_File_Transfer
             return $this->_adapter;
         }
 
-        $direction = (integer) $direction;
+        $direction = (int) $direction;
         return $this->_adapter[$direction];
     }
 
@@ -104,7 +104,7 @@ class Zend_File_Transfer
     public function __call($method, array $options)
     {
         if (array_key_exists('direction', $options)) {
-            $direction = (integer) $options['direction'];
+            $direction = (int) $options['direction'];
         } else {
             $direction = 0;
         }
